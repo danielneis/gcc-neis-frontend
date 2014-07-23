@@ -73,11 +73,11 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 212 "neis.y" /* yacc.c:1909  */
+#line 216 "neis.y" /* yacc.c:1909  */
 
-        tree tree;       //Tree tree developed by us.
-        int ival;       //Integer value for constants.
-        char *name;     //Name of function or variables.
+    tree tree;       //Tree
+    int ival;       //Integer value for constants.
+    char *name;     //Name of function or variables.
 
 #line 83 "neis.tab.h" /* yacc.c:1909  */
 };
