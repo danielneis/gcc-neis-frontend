@@ -20,12 +20,16 @@ along with GCC; see the file COPYING3.  If not see
 
 #include "config.h"
 #include "system.h"
+#include "ansidecl.h"
 #include "coretypes.h"
 #include "tree.h"
+#include "flags.h"
 #include "langhooks.h"
 #include "langhooks-def.h"
 #include "debug.h"
 #include "neis-tree.h"
+#include "toplev.h"
+#include "stmt.h"
 
 /* Tables of information about tree codes.  */
 
@@ -130,10 +134,10 @@ neis_builtin_function (const char *name ATTRIBUTE_UNUSED,
 }
 
 #define LANG_HOOKS_MARK_ADDRESSABLE neis_mark_addressable
-#define LANG_HOOKS_TYPE_FOR_MODE neis_type_for_mode
-#define LANG_HOOKS_TYPE_FOR_SIZE neis_type_for_size
-#define LANG_HOOKS_UNSIGNED_TYPE neis_unsigned_type
-#define LANG_HOOKS_SIGNED_TYPE neis_signed_type
+#define LANG_HOOKS_TYPE_FOR_MODE    neis_type_for_mode
+#define LANG_HOOKS_TYPE_FOR_SIZE    neis_type_for_size
+#define LANG_HOOKS_UNSIGNED_TYPE    neis_unsigned_type
+#define LANG_HOOKS_SIGNED_TYPE      neis_signed_type
 #define LANG_HOOKS_SIGNED_OR_UNSIGNED_TYPE neis_signed_or_unsigned_type
 #undef LANG_HOOKS_GLOBAL_BINDINGS_P
 #define LANG_HOOKS_GLOBAL_BINDINGS_P neis_global_bindings_p
@@ -148,7 +152,7 @@ neis_builtin_function (const char *name ATTRIBUTE_UNUSED,
 #undef LANG_HOOKS_BUILTIN_FUNCTION
 #define LANG_HOOKS_BUILTIN_FUNCTION neis_builtin_function
 
-const struct lang_hooks lang_hooks = LANG_HOOKS_INITIALIZER;
+struct lang_hooks lang_hooks = LANG_HOOKS_INITIALIZER;
 
 /* Language hooks that are not part of lang_hooks.  */
 
@@ -163,7 +167,7 @@ convert (tree type ATTRIBUTE_UNUSED, tree expr ATTRIBUTE_UNUSED)
 static enum neis_tree_node_structure_enum
 neis_tree_node_structure (union lang_tree_node *t ATTRIBUTE_UNUSED)
 {
-  return TS_LTO_GENERIC;
+  return TS_NEIS_GENERIC;
 }
 
 #include "ggc.h"

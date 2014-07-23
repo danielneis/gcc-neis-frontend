@@ -23,25 +23,3 @@
 
 Language
 NEIS
-
-fltrans
-NEIS Report Var(flag_ltrans)
-Run the link-time optimizer in local transformation (LTRANS) mode.
-
-fltrans-output-list=
-NEIS Joined Var(ltrans_output_list)
-Specify a file to which a list of files output by LTRANS is written.
-
-fwpa
-NEIS Driver Report
-Run the link-time optimizer in whole program analysis (WPA) mode.
-
-fwpa=
-NEIS Driver RejectNegative Joined Var(flag_wpa)
-Whole program analysis (WPA) mode with number of parallel jobs specified.
-
-fresolution=
-NEIS Joined
-The resolution file
-
-; This comment is to ensure we retain the blank line above.

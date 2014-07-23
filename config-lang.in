@@ -21,7 +21,7 @@ language="neis"
 compilers="neis1\$(exeext)"
 stagestuff="neis1\$(exeext)"
 
-gtfiles="\$(srcdir)/neis/neis-tree.h \$(srcdir)/neis/neis.c \$(srcdir)/neis/neis.h \$(srcdir)/neis/neis-lang.c"
+gtfiles="\$(srcdir)/neis/neis-tree.h"
 
 # NEIS is a special front end.  From a user's perspective it is not
 # really a language, but a middle end feature.  However, the GIMPLE
