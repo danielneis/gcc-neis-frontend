@@ -1,0 +1,74 @@
+# Top level -*- makefile -*- fragment for NEIS
+#   Copyright (C) 2009-2014 Free Software Foundation, Inc.
+
+#This file is part of GCC.
+
+#GCC is free software; you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation; either version 3, or (at your option)
+#any later version.
+
+#GCC is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with GCC; see the file COPYING3.  If not see
+# <http://www.gnu.org/licenses/>.
+
+# Variables
+
+# The name of the NEIS compiler.
+NEIS_EXE = neis1$(exeext)
+# The NEIS-specific object files inclued in $(NEIS_EXE).
+NEIS_OBJS = neis/neis-lang.o
+
+# Rules
+
+# These hooks are used by the main GCC Makefile.  Consult that
+# Makefile for documentation.
+neis.all.cross: $(NEIS_EXE)
+neis.start.encap: $(NEIS_EXE)
+neis.rest.encap:
+neis.tags:
+neis.install-common:
+neis.install-man:
+neis.install-info:
+neis.dvi:
+neis.pdf:
+neis.install-pdf:
+neis.html:
+neis.install-html:
+neis.uninstall:
+neis.info:
+neis.man:
+neis.srcextra:
+neis.srcman:
+neis.srcinfo:
+neis.install-plugin:
+
+neis.mostlyclean:
+	rm -f $(NEIS_OBJS) $(NEIS_EXE)
+
+neis.clean:
+neis.distclean:
+neis.maintainer-clean:
+neis.stage1:
+neis.stage2:
+neis.stage3:
+neis.stage4:
+neis.stageprofile:
+neis.stagefeedback:
+
+# NEIS rules.
+
+# Use strict warnings for this front end.
+neis-warn = $(STRICT_WARN)
+
+$(NEIS_EXE): $(NEIS_OBJS) $(BACKEND) $(LIBDEPS)
+	+$(LLINKER) $(ALL_LINKERFLAGS) $(LDFLAGS) -o $@ \
+		$(NEIS_OBJS) $(BACKEND) $(BACKENDLIBS) $(LIBS)
+
+# NEIS testing is done as part of C/C++/Fortran etc. testing.
+check-neis:
