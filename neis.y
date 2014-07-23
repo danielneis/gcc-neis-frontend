@@ -15,6 +15,7 @@
 #include "expr.h"
 #include "stmt.h"
 #include "name-lookup.h"
+#include "stringpool.h"
 
 int yylex(void);
 void yyerror(char *s);
@@ -213,8 +214,27 @@ tree ret_stmt (tree expr)
 
 %}
 
+%code requires {
+#include "neis.tab.h"
+#include "config.h"
+#include "system.h"
+#include "coretypes.h"
+#include "tree.h"
+#include "stor-layout.h"
+#include "langhooks.h"
+#include "langhooks-def.h"
+#include "debug.h"
+#include "neis-tree.h"
+#include "function.h"
+#include "toplev.h"
+#include "expr.h"
+#include "stmt.h"
+#include "name-lookup.h"
+#include "stringpool.h"
+}
+
 %union{
-    tree tree;       //Tree
+    tree exp;       //Tree
     int ival;       //Integer value for constants.
     char *name;     //Name of function or variables.
 }

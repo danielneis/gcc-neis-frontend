@@ -39,6 +39,27 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 217 "neis.y" /* yacc.c:1909  */
+
+#include "neis.tab.h"
+#include "config.h"
+#include "system.h"
+#include "coretypes.h"
+#include "tree.h"
+#include "stor-layout.h"
+#include "langhooks.h"
+#include "langhooks-def.h"
+#include "debug.h"
+#include "neis-tree.h"
+#include "function.h"
+#include "toplev.h"
+#include "expr.h"
+#include "stmt.h"
+#include "name-lookup.h"
+#include "stringpool.h"
+
+#line 63 "neis.tab.h" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -73,13 +94,13 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 216 "neis.y" /* yacc.c:1909  */
+#line 236 "neis.y" /* yacc.c:1909  */
 
-    tree tree;       //Tree
+    tree exp;       //Tree
     int ival;       //Integer value for constants.
     char *name;     //Name of function or variables.
 
-#line 83 "neis.tab.h" /* yacc.c:1909  */
+#line 104 "neis.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

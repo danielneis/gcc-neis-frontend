@@ -693,7 +693,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 6 "neis.l"
+#line 8 "neis.l"
 
 #line 699 "lex.yy.c"
 
@@ -781,128 +781,128 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 7 "neis.l"
+#line 9 "neis.l"
 ;                   // white space
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 8 "neis.l"
+#line 10 "neis.l"
 {yylval.ival = atoi(yytext); return NUM;}   // integers
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 9 "neis.l"
+#line 11 "neis.l"
 {return TINT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 10 "neis.l"
+#line 12 "neis.l"
 {return TFLOAT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 11 "neis.l"
+#line 13 "neis.l"
 {return TCHAR;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 12 "neis.l"
+#line 14 "neis.l"
 {return TVOID;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 13 "neis.l"
+#line 15 "neis.l"
 {return TDOUBLE;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 14 "neis.l"
+#line 16 "neis.l"
 {return TRETURN;}    // return
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 15 "neis.l"
+#line 17 "neis.l"
 {return IF;}        // if
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 16 "neis.l"
+#line 18 "neis.l"
 {return ELSE;}      // else
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 17 "neis.l"
+#line 19 "neis.l"
 {return WHILE;}     // while
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 18 "neis.l"
+#line 20 "neis.l"
 {return FOR;}       // for
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 19 "neis.l"
+#line 21 "neis.l"
 {return TAND;}       // and
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 20 "neis.l"
+#line 22 "neis.l"
 {return TOR;}        // or
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 21 "neis.l"
+#line 23 "neis.l"
 {return TLE;}        // less or equal
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 22 "neis.l"
+#line 24 "neis.l"
 {return TGE;}        // greater or equal
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 23 "neis.l"
+#line 25 "neis.l"
 {return TLT;}        // less than
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 24 "neis.l"
+#line 26 "neis.l"
 {return TGT;}        // greater than
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 25 "neis.l"
+#line 27 "neis.l"
 {return TEQ;}        // equal to
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 26 "neis.l"
+#line 28 "neis.l"
 {return TNE;}        // not equal to
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 27 "neis.l"
-{yylval.name = strdup(yytext); return ID;} // function/variable name
+#line 29 "neis.l"
+{yylval.name = yytext; return ID;} // function/variable name
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 28 "neis.l"
+#line 30 "neis.l"
 {return yytext[0];} // match all single characters
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 29 "neis.l"
+#line 31 "neis.l"
 ; // ignore comments
 	YY_BREAK
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
-#line 30 "neis.l"
+#line 32 "neis.l"
 ; // ignore comments
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 31 "neis.l"
+#line 33 "neis.l"
 ECHO;
 	YY_BREAK
 #line 909 "lex.yy.c"
@@ -1903,7 +1903,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 31 "neis.l"
+#line 33 "neis.l"
 
 
 
