@@ -1,4 +1,4 @@
-This is code for a minimal GCC frontend based works found on internet:
+This is code for a minimal GCC frontend based on works found on internet:
 
 * http://www.tldp.org/HOWTO/GCC-Frontend-HOWTO.html
 * https://gcc.gnu.org/wiki/WritingANewFrontEnd
