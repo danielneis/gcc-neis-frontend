@@ -1,5 +1,6 @@
 %{
 #include "neis.tab.h"
+#include "tree.h"
 #include <string.h>
 %}
 

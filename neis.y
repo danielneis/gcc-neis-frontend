@@ -40,7 +40,7 @@ void build_function_decl (char *name)
     fntype = build_function_type(integer_type_node, param_type_list);
 
     /*Next is the function declaration. It is possible with the function build_decl. The first argument says that it is a function declaration. The second one involves a function, get_identifier. It returns a tree whose name is "name". If an identifier with that name has been previously referred to, then the same tree node is returned. Since this is the first time we are using this, a new tree node is returned. The last argument deals with the type of the function. */
-    fndecl = build_decl(FUNCTION_DECL, fndecl, get_identifier(name), fntype);
+    fndecl = build_decl(UNKNOWN_LOCATION, FUNCTION_DECL, get_identifier(name), fntype);
 
     /*Here comes the flags. They are invoked through special macros given below*/
 
@@ -58,7 +58,7 @@ void build_function_decl (char *name)
 
     /* It makes the declaration for the return value.*/
     DECL_RESULT(fndecl) =
-        build_decl(RESULT_DECL, NULL_TREE, NULL, integer_type_node);
+        build_decl(UNKNOWN_LOCATION, RESULT_DECL, NULL, integer_type_node);
 
     /*It declares the context of the result. ie. We inform the result, that its scope is fndecl.*/
     DECL_CONTEXT( DECL_RESULT( fndecl)) = fndecl;
@@ -103,7 +103,7 @@ void build_function_decl (char *name)
 void build_function()
 {
 
-    tree fndecl; // Consider it as a global value.
+    //tree fndecl; // Consider it as a global value.
 
     /*Let's build the tree and emit the rtl for the return statement. In order to avoid an extra tree variable, I have included the tree creation and rtl conversion in a single statement. First build a tree of type result for 'fndecl'. I am always returning zero from our simple function. If you intend to return any other value, replace integer_zero_node with the other corresponding tree structure. expand_return creates the rtl for the tree. */
     //expand_return (build (MODIFY_EXPR, void_type_node, DECL_RESULT(fndecl), integer_zero_node));
@@ -146,7 +146,7 @@ void add_var(char *name)
       Thus we have name of the variable stored in var_name[] and
       tree stored in var_decls[ ]*/
     var_decls[i] =
-        build_decl (VAR_DECL, fndecl, get_identifier(name), integer_type_node);
+        build_decl (UNKNOWN_LOCATION, VAR_DECL, get_identifier(name), integer_type_node);
 
     /* Explained before*/
     DECL_CONTEXT (var_decls[i]) = fndecl;
@@ -177,12 +177,12 @@ tree get_var(char *name)
     return NULL_TREE;
 }
 
-void make_assign (tree vartree, tree valtree)
+tree make_assign (tree vartree, tree valtree)
 {
     tree assign;
 
     // Create the tree. Explained before.
-    assign = build (MODIFY_EXPR, integer_type_node, vartree, valtree);
+    assign = build2 (MODIFY_EXPR, integer_type_node, vartree, valtree);
 
     /*Non zero values means that there is a side effect and re evaluation
     of the whole expression could produce a different value. The
@@ -195,6 +195,8 @@ void make_assign (tree vartree, tree valtree)
 
     /* Emit the rtl for the assign tree */
     //expand_expr_stmt (assign);
+
+    return assign;
 }
 
 tree ret_stmt (tree expr)
@@ -204,7 +206,7 @@ tree ret_stmt (tree expr)
     /* build the tree node for return. The arguments are explained
        before. 'fndecl' is the global variable that we have defined
        before, for our function.  */
-    ret = build (MODIFY_EXPR, integer_type_node, DECL_RESULT(fndecl), expr);
+    ret = build2 (MODIFY_EXPR, integer_type_node, DECL_RESULT(fndecl), expr);
 
     /*emits the rtl */
     //expand_return (ret);
@@ -234,7 +236,7 @@ tree ret_stmt (tree expr)
 }
 
 %union{
-    tree exp;       //Tree
+    tree treenode;       //Tree
     int ival;       //Integer value for constants.
     char *name;     //Name of function or variables.
 }
@@ -245,27 +247,27 @@ tree ret_stmt (tree expr)
 %token NUM ID
 %token TRETURN
 
-%type <tree> CompoundStmt
-%type <tree> WhileStmt
-%type <tree> ForStmt
-%type <tree> IfStmt
-%type <tree> IfElseStmt
-%type <tree> ReturnStmt
-%type <tree> Stmt
-%type <tree> StmtList
-%type <tree> TINT TFLOAT TCHAR TDOUBLE TVOID
-%type <tree> NUM
-%type <tree> ID
-%type <tree> TRETURN
-%type <tree> Arg
-%type <tree> Assignment
-%type <tree> Type
-%type <tree> Function
-%type <tree> FunctionCall
-%type <tree> Declaration
-%type <tree> Expr
-%type <tree> error
-%type <tree> ';'
+%type <treenode> CompoundStmt
+%type <treenode> WhileStmt
+%type <treenode> ForStmt
+%type <treenode> IfStmt
+%type <treenode> IfElseStmt
+%type <treenode> ReturnStmt
+%type <treenode> Stmt
+%type <treenode> StmtList
+%type <treenode> TINT TFLOAT TCHAR TDOUBLE TVOID
+%type <ival> NUM
+%type <name> ID
+%type <treenode> TRETURN
+%type <treenode> Arg
+%type <treenode> Assignment
+%type <treenode> Type
+%type <treenode> Function
+%type <treenode> FunctionCall
+%type <treenode> Declaration
+%type <treenode> Expr
+%type <treenode> error
+%type <treenode> ';'
 
 %right '='
 %left '/' '*'
@@ -285,33 +287,32 @@ Declaration:  Type ID ';' { add_var($2); }
            ;
 
 /* Assignment block */
-Assignment:   ID '=' Assignment { make_assign(get_var($1), $3); }
-            | ID '=' FunctionCall 
-            | ID ',' Assignment 
-            | NUM ',' Assignment 
-            | ID '+' Assignment 
-            | ID '-' Assignment 
-            | ID '*' Assignment 
-            | ID '/' Assignment 
-            | NUM '+' Assignment { $$ = build (PLUS_EXPR, integer_type_node, $1, $3); }
-            | NUM '-' Assignment { $$ = build (MINUS_EXPR, integer_type_node, $1, $3); }
-            | NUM '*' Assignment { $$ = build (MULT_EXPR, integer_type_node, $1, $3); }
-            | NUM '/' Assignment { $$ = build (TRUNC_DIV_EXPR, integer_type_node, $1, $3); }
-            | NUM '%' Assignment { $$ = build (TRUNC_MOD_EXPR, integer_type_node, $1, $3); }
-            | ID TOR ID  
-            | ID TAND ID 
+Assignment:   ID '=' Assignment { $$ = make_assign(get_var($1), $3); }
+            | ID '=' FunctionCall  { $$ =  make_assign(get_var($1), $3); }
+            | ID '+' Assignment { $$ = build2 (PLUS_EXPR, integer_type_node, get_var($1), $3); }
+            | ID '-' Assignment { $$ = build2 (MINUS_EXPR, integer_type_node, get_var($1), $3); }
+            | ID '*' Assignment { $$ = build2 (MULT_EXPR, integer_type_node, get_var($1), $3); }
+            | ID '/' Assignment { $$ = build2 (TRUNC_DIV_EXPR, integer_type_node, get_var($1), $3); }
+            | ID '%' Assignment { $$ = build2 (TRUNC_DIV_EXPR, integer_type_node, get_var($1), $3); }
+            | NUM '+' Assignment { $$ = build2 (PLUS_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
+            | NUM '-' Assignment { $$ = build2 (MINUS_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
+            | NUM '*' Assignment { $$ = build2 (MULT_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
+            | NUM '/' Assignment { $$ = build2 (TRUNC_DIV_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
+            | NUM '%' Assignment { $$ = build2 (TRUNC_MOD_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
+            | ID TOR ID    {$$ = build2 (TRUTH_ORIF_EXPR, integer_type_node, get_var($1), get_var($3)); }
+            | ID TAND ID  {$$ = build2 (TRUTH_ANDIF_EXPR, integer_type_node, get_var($1), get_var($3)); }
             | '\'' Assignment '\'' { $$ = $2; }
             | '(' Assignment ')' { $$ = $2; }
             | '-' '(' Assignment ')' { $$ = build1 (NEGATE_EXPR, integer_type_node, $3); }
             | '-' NUM { $$ = build1 (NEGATE_EXPR, integer_type_node, $2); }
-            | '-' ID { $$ = build1 (NEGATE_EXPR, integer_type_node, $2); }
-            |   NUM { $$ = get_var ($1); }
+            | '-' ID { $$ = build1 (NEGATE_EXPR, integer_type_node, get_var($2)); }
+            |   NUM { $$ = build0 (INTEGER_CST, $1); }
             |   ID  { $$ = get_var ($1); }
 	;
 
 /* Function Call Block */
-FunctionCall :   ID'('')' 
-               | ID'('Assignment')' 
+FunctionCall :   ID'('')'  { $$ = build1 (CALL_EXPR, integer_type_node, get_var($1)); }
+               | ID'('Assignment')'  { $$ = build0 (CALL_EXPR, $1); }
             ;
 
 /* Function block */
@@ -392,13 +393,12 @@ ReturnStmt: TRETURN Stmt ';' { $$ = ret_stmt ($2);}
         ;
 
 /*Expression Block*/
-Expr:  {}
-      | Expr TLE Expr 
-      | Expr TGE Expr 
-      | Expr TNE Expr 
-      | Expr TEQ Expr 
-      | Expr TGT Expr 
-      | Expr TLT Expr 
+Expr:   Expr TLE Expr {$$ = build2 (LE_EXPR, integer_type_node, $1, $3); } 
+      | Expr TGE Expr {$$ = build2 (GE_EXPR, integer_type_node, $1, $3); } 
+      | Expr TNE Expr {$$ = build2 (NE_EXPR, integer_type_node, $1, $3); } 
+      | Expr TEQ Expr {$$ = build2 (EQ_EXPR, integer_type_node, $1, $3); } 
+      | Expr TGT Expr {$$ = build2 (GT_EXPR, integer_type_node, $1, $3); } 
+      | Expr TLT Expr {$$ = build2 (LT_EXPR, integer_type_node, $1, $3); } 
       | Assignment
     ;
 

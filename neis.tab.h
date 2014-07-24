@@ -40,7 +40,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 217 "neis.y" /* yacc.c:1909  */
+#line 219 "neis.y" /* yacc.c:1909  */
 
 #include "neis.tab.h"
 #include "config.h"
@@ -94,9 +94,9 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 236 "neis.y" /* yacc.c:1909  */
+#line 238 "neis.y" /* yacc.c:1909  */
 
-    tree exp;       //Tree
+    tree treenode;       //Tree
     int ival;       //Integer value for constants.
     char *name;     //Name of function or variables.
 
