@@ -68,7 +68,7 @@ neis-warn = $(STRICT_WARN)
 
 $(NEIS_EXE): $(NEIS_OBJS) $(BACKEND) $(LIBDEPS)
 	+$(LLINKER) $(ALL_LINKERFLAGS) $(LDFLAGS) -o $@ \
-		$(NEIS_OBJS) -lfl $(BACKEND) $(BACKENDLIBS) $(LIBS)
+	-Wno-write-strings $(NEIS_OBJS) -lfl $(BACKEND) $(BACKENDLIBS) $(LIBS)
 
 # NEIS testing is done as part of C/C++/Fortran etc. testing.
 check-neis:

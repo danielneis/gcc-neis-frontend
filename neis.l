@@ -4,6 +4,8 @@
 #include <string.h>
 %}
 
+%pointer
+
 %%
 [ \n\t]           ;                   // white space
 [0-9]+            {yylval.ival = atoi(yytext); return NUM;}   // integers
@@ -25,7 +27,7 @@ for               {return FOR;}       // for
 ">"               {return TGT;}        // greater than
 "=="              {return TEQ;}        // equal to
 "!="              {return TNE;}        // not equal to
-[a-zA-Z]+         {yylval.name = yytext; return ID;} // function/variable name
+[a-zA-Z]+         {yylval.name =  (char*)yytext; return ID;} // function/variable name
 .                 {return yytext[0];} // match all single characters
 \/\/.*            ; // ignore comments
 \/\*(.*\n)*.*\*\/ ; // ignore comments
