@@ -308,6 +308,11 @@ neis_global_bindings_p (void)
     gcc_unreachable ();
 }
 
+void neis_parse_file(void)
+{
+    printf("I am parsing you file ;)");
+}
+
 #undef LANG_HOOKS_NAME
 #define LANG_HOOKS_NAME "Neis"
 
@@ -327,6 +332,9 @@ neis_global_bindings_p (void)
 
 #undef LANG_HOOKS_INIT_TS
 #define LANG_HOOKS_INIT_TS neis_init_ts
+
+#undef LANG_HOOKS_PARSE_FILE
+#define LANG_HOOKS_PARSE_FILE neis_parse_file
 
 struct lang_hooks lang_hooks = LANG_HOOKS_INITIALIZER;
 

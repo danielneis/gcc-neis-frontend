@@ -64,7 +64,7 @@ void build_function_decl (char *name)
     DECL_CONTEXT( DECL_RESULT( fndecl)) = fndecl;
 
     /*Creates the rtl for the function declaration. The first argument gives the tree for the function declaration The second parameter deals with assembler symbol name. We don't want it here. We make it NULL. Let's look at third and fourth parameters later. Interested readers can refer toplev.c */
-    //rest_of_decl_compilation (fndecl, NULL_TREE, 1, 0);
+    rest_of_decl_compilation (fndecl, 1, 0);
 
     /*This gives idea regarding where the declaration is in the source code */
     //DECL_SOURCE_FILE( fndecl) = input_filename;
@@ -118,7 +118,7 @@ void build_function()
     //expand_function_end (input_file_name, 1, 0);
 
     /*Compile the function, output the assembler code, Free the tree storage. */
-    //rest_of_compilation (fndecl);
+    rest_of_decl_compilation (fndecl, 1, 0);
 
     /*We are free now */
     current_function_decl=0;
@@ -135,11 +135,11 @@ void add_var(char *name)
 {
     //tree fndecl; // Consider it as a global value.
     int i;
-    /*Add the name given, as the last name in the array */
-    for(i=0;var_name[i];i++);
 
-    /* Store the name */
-    var_name[i] = name;
+    /*Add the name given, as the first empty item in the array */
+    for(i=0;var_name[i];i++)
+        if (!var_name[i])
+            var_name[i] = name;
 
     /*Build the tree structure for the variable declared
       All the parameters are explained before.
@@ -159,7 +159,7 @@ void add_var(char *name)
     //pushdecl (var_decls[i]);
 
     /* Emit the rtl for the variable declaration*/
-    //expand_decl (var_decls[i]);
+    rest_of_compilation (var_decls[i]);
 
     /* Emit the rtl for the initialization. ie. Initialized to zero*/
     //expand_decl_init (var_decls[i]);
@@ -193,9 +193,6 @@ tree make_assign (tree vartree, tree valtree)
     /* Indicates that the tree node is used */
     TREE_USED (assign) = 1;
 
-    /* Emit the rtl for the assign tree */
-    //expand_expr_stmt (assign);
-
     return assign;
 }
 
@@ -207,9 +204,6 @@ tree ret_stmt (tree expr)
        before. 'fndecl' is the global variable that we have defined
        before, for our function.  */
     ret = build2 (MODIFY_EXPR, integer_type_node, DECL_RESULT(fndecl), expr);
-
-    /*emits the rtl */
-    //expand_return (ret);
 
     return ret;
 }
@@ -361,38 +355,26 @@ Type:   TINT
     ;
 
 /* Loop Blocks */ 
-WhileStmt:   WHILE '(' Expr ')' { //struct nesting *loop;
-                                  //loop = expand_start_loop (0);
-                                  //expand_exit_loop_if_false (loop, $3);
-                                } Stmt {/* expand_end_loop();*/ }
-	   | WHILE '(' Expr ')' { // struct nesting *loop;
-                                  //loop = expand_start_loop (0);
-                                  //expand_exit_loop_if_false (loop, $3);
-                                } CompoundStmt  { /*expand_end_loop();*/ }
+WhileStmt:   WHILE '(' Expr ')' Stmt { $$ = build2 (WHILE_STMT, integer_type_node, $3, $5); }
+	   | WHILE '(' Expr ')' CompoundStmt  { $$ = build2 (WHILE_STMT, integer_type_node, $3, $5); }
         ;
 
 /* For Block */
-ForStmt: FOR '(' Expr ';' Expr ';' Expr ')' {// struct nesting *loop;
-                                             // loop = expand_start_loop (0);
-                                             // expand_exit_loop_if_false (loop, $7);
-                                            } Stmt   { /*expand_end_loop();*/ }
-       | FOR '(' Expr ';' Expr ';' Expr ')' { //struct nesting *loop;
-                                             // loop = expand_start_loop (0);
-                                            //  expand_exit_loop_if_false (loop, $7);
-                                            }  CompoundStmt    { /*expand_end_loop();*/ }
+ForStmt: FOR '(' Expr ';' Expr ';' Expr ')' Stmt { $$ = build4 (FOR_STMT, integer_type_ndoe, $3, $5, $7, $9); }
+       | FOR '(' Expr ';' Expr ';' Expr ')' CompoundStmt { $$ = build4 (FOR_STMT, integer_type_ndoe, $3, $5, $7, $9); }
     ;
 
 /* IfStmt Block */
-IfStmt : IF '(' Expr ')'  '{'
-		Stmt  {/* expand_start_cond ($3, 0); */}
-        '}' {/* expand_end_cond ();*/ }
-    ;
+IfStmt : IF '(' Expr ')' '{'
+		Stmt
+        '}' { $$ = build3 (COND_EXPR, integer_type_node, $3, $6, NULL_TREE); }
+       ;
 
-IfElseStmt : IF '(' Expr ')' {/*  expand_start_cond ($3, 0); */} '{'
+IfElseStmt : IF '(' Expr ')' '{'
 		Stmt 
-             '}' {/*  expand_start_else ();*/ } ELSE '{'
+             '}' ELSE '{'
                Stmt
-             '}' {/*  expand_end_cond (); */} 
+             '}' { $$ = build3 (COND_EXPR, integer_type_node, $3, $6, $10); }
 	;
 
 ReturnStmt: TRETURN Stmt ';' { $$ = ret_stmt ($2);}
