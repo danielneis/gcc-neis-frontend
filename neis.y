@@ -199,6 +199,14 @@ tree make_assign (tree vartree, tree valtree)
     return assign;
 }
 
+tree make_num_assignment(enum tree_code, int num, tree treeval) {
+
+    tree numtree = build0 (INTEGER_CST, num);
+    tree assign = build2 (tree_code, integer_type_node, numtree, treeval);
+    return assign;
+
+}
+
 tree ret_stmt (tree expr)
 {
     tree fndecl; // Consider it as a global value.
@@ -294,17 +302,17 @@ Assignment:   ID '=' Assignment { $$ = make_assign(get_var($1), $3); }
             | ID '*' Assignment { $$ = build2 (MULT_EXPR, integer_type_node, get_var($1), $3); }
             | ID '/' Assignment { $$ = build2 (TRUNC_DIV_EXPR, integer_type_node, get_var($1), $3); }
             | ID '%' Assignment { $$ = build2 (TRUNC_DIV_EXPR, integer_type_node, get_var($1), $3); }
-            | NUM '+' Assignment { $$ = build2 (PLUS_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
-            | NUM '-' Assignment { $$ = build2 (MINUS_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
-            | NUM '*' Assignment { $$ = build2 (MULT_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
-            | NUM '/' Assignment { $$ = build2 (TRUNC_DIV_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
-            | NUM '%' Assignment { $$ = build2 (TRUNC_MOD_EXPR, integer_type_node, build0 (INTEGER_CST, $1), $3); }
+            | NUM '+' Assignment { $$ = make_num_assignment (PLUS_EXPR, $1, $3); }
+            | NUM '-' Assignment { $$ = make_num_assignment (MINUS_EXPR, $1, $3); }
+            | NUM '*' Assignment { $$ = make_num_assignment (MULT_EXPR,  $1, $3); }
+            | NUM '/' Assignment { $$ = make_num_assignment (TRUNC_DIV_EXPR, $1, $3); }
+            | NUM '%' Assignment { $$ = make_num_assignment (TRUNC_MOD_EXPR, $1, $3); }
             | ID TOR ID    {$$ = build2 (TRUTH_ORIF_EXPR, integer_type_node, get_var($1), get_var($3)); }
             | ID TAND ID  {$$ = build2 (TRUTH_ANDIF_EXPR, integer_type_node, get_var($1), get_var($3)); }
             | '\'' Assignment '\'' { $$ = $2; }
             | '(' Assignment ')' { $$ = $2; }
             | '-' '(' Assignment ')' { $$ = build1 (NEGATE_EXPR, integer_type_node, $3); }
-            | '-' NUM { $$ = build1 (NEGATE_EXPR, integer_type_node, $2); }
+            | '-' NUM { tree num = build0(INTEGER_CST, $2); $$ = build1 (MINUS_EXPR, integer_type_node, 0, num); }
             | '-' ID { $$ = build1 (NEGATE_EXPR, integer_type_node, get_var($2)); }
             |   NUM { $$ = build0 (INTEGER_CST, $1); }
             |   ID  { $$ = get_var ($1); }
@@ -312,7 +320,7 @@ Assignment:   ID '=' Assignment { $$ = make_assign(get_var($1), $3); }
 
 /* Function Call Block */
 FunctionCall :   ID'('')'  { $$ = build1 (CALL_EXPR, integer_type_node, get_var($1)); }
-               | ID'('Assignment')'  { $$ = build0 (CALL_EXPR, $1); }
+               | ID'('Assignment')'  { $$ = build0 (CALL_EXPR, get_var($1)); }
             ;
 
 /* Function block */

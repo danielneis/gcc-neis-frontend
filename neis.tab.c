@@ -264,6 +264,14 @@ tree make_assign (tree vartree, tree valtree)
     return assign;
 }
 
+tree make_num_assignment(enum tree_code, int num, tree treeval) {
+
+    tree numtree = build0 (INTEGER_CST, num);
+    tree assign = build2 (tree_code, integer_type_node, numtree, treeval);
+    return assign;
+
+}
+
 tree ret_stmt (tree expr)
 {
     tree fndecl; // Consider it as a global value.
@@ -280,7 +288,7 @@ tree ret_stmt (tree expr)
 }
 
 
-#line 284 "neis.tab.c" /* yacc.c:339  */
+#line 292 "neis.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -310,7 +318,7 @@ tree ret_stmt (tree expr)
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 219 "neis.y" /* yacc.c:355  */
+#line 227 "neis.y" /* yacc.c:355  */
 
 #include "neis.tab.h"
 #include "config.h"
@@ -329,7 +337,7 @@ extern int yydebug;
 #include "name-lookup.h"
 #include "stringpool.h"
 
-#line 333 "neis.tab.c" /* yacc.c:355  */
+#line 341 "neis.tab.c" /* yacc.c:355  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -364,13 +372,13 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 238 "neis.y" /* yacc.c:355  */
+#line 246 "neis.y" /* yacc.c:355  */
 
     tree treenode;       //Tree
     int ival;       //Integer value for constants.
     char *name;     //Name of function or variables.
 
-#line 374 "neis.tab.c" /* yacc.c:355  */
+#line 382 "neis.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -385,7 +393,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 389 "neis.tab.c" /* yacc.c:358  */
+#line 397 "neis.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -684,14 +692,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   279,   279,   280,   283,   284,   285,   286,   290,   291,
-     292,   293,   294,   295,   296,   297,   298,   299,   300,   301,
-     302,   303,   304,   305,   306,   307,   308,   309,   310,   314,
-     315,   319,   322,   323,   326,   327,   330,   333,   336,   337,
-     340,   341,   342,   343,   344,   345,   346,   350,   351,   352,
-     353,   354,   358,   358,   362,   362,   369,   369,   373,   373,
-     381,   380,   385,   387,   385,   392,   396,   397,   398,   399,
-     400,   401,   402
+       0,   287,   287,   288,   291,   292,   293,   294,   298,   299,
+     300,   301,   302,   303,   304,   305,   306,   307,   308,   309,
+     310,   311,   312,   313,   314,   315,   316,   317,   318,   322,
+     323,   327,   330,   331,   334,   335,   338,   341,   344,   345,
+     348,   349,   350,   351,   352,   353,   354,   358,   359,   360,
+     361,   362,   366,   366,   370,   370,   377,   377,   381,   381,
+     389,   388,   393,   395,   393,   400,   404,   405,   406,   407,
+     408,   409,   410
 };
 #endif
 
@@ -1565,319 +1573,319 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 279 "neis.y" /* yacc.c:1646  */
+#line 287 "neis.y" /* yacc.c:1646  */
     { build_function(); }
-#line 1571 "neis.tab.c" /* yacc.c:1646  */
+#line 1579 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 280 "neis.y" /* yacc.c:1646  */
+#line 288 "neis.y" /* yacc.c:1646  */
     { build_function(); }
-#line 1577 "neis.tab.c" /* yacc.c:1646  */
+#line 1585 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 283 "neis.y" /* yacc.c:1646  */
+#line 291 "neis.y" /* yacc.c:1646  */
     { add_var((yyvsp[-1].name)); }
-#line 1583 "neis.tab.c" /* yacc.c:1646  */
+#line 1591 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 290 "neis.y" /* yacc.c:1646  */
+#line 298 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = make_assign(get_var((yyvsp[-2].name)), (yyvsp[0].treenode)); }
-#line 1589 "neis.tab.c" /* yacc.c:1646  */
+#line 1597 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 291 "neis.y" /* yacc.c:1646  */
+#line 299 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) =  make_assign(get_var((yyvsp[-2].name)), (yyvsp[0].treenode)); }
-#line 1595 "neis.tab.c" /* yacc.c:1646  */
+#line 1603 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 292 "neis.y" /* yacc.c:1646  */
+#line 300 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = build2 (PLUS_EXPR, integer_type_node, get_var((yyvsp[-2].name)), (yyvsp[0].treenode)); }
-#line 1601 "neis.tab.c" /* yacc.c:1646  */
+#line 1609 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 293 "neis.y" /* yacc.c:1646  */
+#line 301 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = build2 (MINUS_EXPR, integer_type_node, get_var((yyvsp[-2].name)), (yyvsp[0].treenode)); }
-#line 1607 "neis.tab.c" /* yacc.c:1646  */
+#line 1615 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 294 "neis.y" /* yacc.c:1646  */
+#line 302 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = build2 (MULT_EXPR, integer_type_node, get_var((yyvsp[-2].name)), (yyvsp[0].treenode)); }
-#line 1613 "neis.tab.c" /* yacc.c:1646  */
+#line 1621 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 295 "neis.y" /* yacc.c:1646  */
+#line 303 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = build2 (TRUNC_DIV_EXPR, integer_type_node, get_var((yyvsp[-2].name)), (yyvsp[0].treenode)); }
-#line 1619 "neis.tab.c" /* yacc.c:1646  */
+#line 1627 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 296 "neis.y" /* yacc.c:1646  */
+#line 304 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = build2 (TRUNC_DIV_EXPR, integer_type_node, get_var((yyvsp[-2].name)), (yyvsp[0].treenode)); }
-#line 1625 "neis.tab.c" /* yacc.c:1646  */
+#line 1633 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 297 "neis.y" /* yacc.c:1646  */
-    { (yyval.treenode) = build2 (PLUS_EXPR, integer_type_node, build0 (INTEGER_CST, (yyvsp[-2].ival)), (yyvsp[0].treenode)); }
-#line 1631 "neis.tab.c" /* yacc.c:1646  */
+#line 305 "neis.y" /* yacc.c:1646  */
+    { (yyval.treenode) = make_num_assignment (PLUS_EXPR, (yyvsp[-2].ival), (yyvsp[0].treenode)); }
+#line 1639 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 298 "neis.y" /* yacc.c:1646  */
-    { (yyval.treenode) = build2 (MINUS_EXPR, integer_type_node, build0 (INTEGER_CST, (yyvsp[-2].ival)), (yyvsp[0].treenode)); }
-#line 1637 "neis.tab.c" /* yacc.c:1646  */
+#line 306 "neis.y" /* yacc.c:1646  */
+    { (yyval.treenode) = make_num_assignment (MINUS_EXPR, (yyvsp[-2].ival), (yyvsp[0].treenode)); }
+#line 1645 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 299 "neis.y" /* yacc.c:1646  */
-    { (yyval.treenode) = build2 (MULT_EXPR, integer_type_node, build0 (INTEGER_CST, (yyvsp[-2].ival)), (yyvsp[0].treenode)); }
-#line 1643 "neis.tab.c" /* yacc.c:1646  */
+#line 307 "neis.y" /* yacc.c:1646  */
+    { (yyval.treenode) = make_num_assignment (MULT_EXPR,  (yyvsp[-2].ival), (yyvsp[0].treenode)); }
+#line 1651 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 300 "neis.y" /* yacc.c:1646  */
-    { (yyval.treenode) = build2 (TRUNC_DIV_EXPR, integer_type_node, build0 (INTEGER_CST, (yyvsp[-2].ival)), (yyvsp[0].treenode)); }
-#line 1649 "neis.tab.c" /* yacc.c:1646  */
+#line 308 "neis.y" /* yacc.c:1646  */
+    { (yyval.treenode) = make_num_assignment (TRUNC_DIV_EXPR, (yyvsp[-2].ival), (yyvsp[0].treenode)); }
+#line 1657 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 301 "neis.y" /* yacc.c:1646  */
-    { (yyval.treenode) = build2 (TRUNC_MOD_EXPR, integer_type_node, build0 (INTEGER_CST, (yyvsp[-2].ival)), (yyvsp[0].treenode)); }
-#line 1655 "neis.tab.c" /* yacc.c:1646  */
+#line 309 "neis.y" /* yacc.c:1646  */
+    { (yyval.treenode) = make_num_assignment (TRUNC_MOD_EXPR, (yyvsp[-2].ival), (yyvsp[0].treenode)); }
+#line 1663 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 302 "neis.y" /* yacc.c:1646  */
+#line 310 "neis.y" /* yacc.c:1646  */
     {(yyval.treenode) = build2 (TRUTH_ORIF_EXPR, integer_type_node, get_var((yyvsp[-2].name)), get_var((yyvsp[0].name))); }
-#line 1661 "neis.tab.c" /* yacc.c:1646  */
+#line 1669 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 303 "neis.y" /* yacc.c:1646  */
+#line 311 "neis.y" /* yacc.c:1646  */
     {(yyval.treenode) = build2 (TRUTH_ANDIF_EXPR, integer_type_node, get_var((yyvsp[-2].name)), get_var((yyvsp[0].name))); }
-#line 1667 "neis.tab.c" /* yacc.c:1646  */
+#line 1675 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 304 "neis.y" /* yacc.c:1646  */
+#line 312 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = (yyvsp[-1].treenode); }
-#line 1673 "neis.tab.c" /* yacc.c:1646  */
+#line 1681 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 305 "neis.y" /* yacc.c:1646  */
+#line 313 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = (yyvsp[-1].treenode); }
-#line 1679 "neis.tab.c" /* yacc.c:1646  */
+#line 1687 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 306 "neis.y" /* yacc.c:1646  */
+#line 314 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = build1 (NEGATE_EXPR, integer_type_node, (yyvsp[-1].treenode)); }
-#line 1685 "neis.tab.c" /* yacc.c:1646  */
+#line 1693 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 307 "neis.y" /* yacc.c:1646  */
-    { (yyval.treenode) = build1 (NEGATE_EXPR, integer_type_node, (yyvsp[0].ival)); }
-#line 1691 "neis.tab.c" /* yacc.c:1646  */
+#line 315 "neis.y" /* yacc.c:1646  */
+    { tree num = build0(INTEGER_CST, (yyvsp[0].ival)); (yyval.treenode) = build1 (MINUS_EXPR, integer_type_node, 0, num); }
+#line 1699 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 308 "neis.y" /* yacc.c:1646  */
+#line 316 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = build1 (NEGATE_EXPR, integer_type_node, get_var((yyvsp[0].name))); }
-#line 1697 "neis.tab.c" /* yacc.c:1646  */
+#line 1705 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 309 "neis.y" /* yacc.c:1646  */
+#line 317 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = build0 (INTEGER_CST, (yyvsp[0].ival)); }
-#line 1703 "neis.tab.c" /* yacc.c:1646  */
+#line 1711 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 310 "neis.y" /* yacc.c:1646  */
+#line 318 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = get_var ((yyvsp[0].name)); }
-#line 1709 "neis.tab.c" /* yacc.c:1646  */
+#line 1717 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 314 "neis.y" /* yacc.c:1646  */
+#line 322 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = build1 (CALL_EXPR, integer_type_node, get_var((yyvsp[-2].name))); }
-#line 1715 "neis.tab.c" /* yacc.c:1646  */
+#line 1723 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 315 "neis.y" /* yacc.c:1646  */
-    { (yyval.treenode) = build0 (CALL_EXPR, (yyvsp[-3].name)); }
-#line 1721 "neis.tab.c" /* yacc.c:1646  */
+#line 323 "neis.y" /* yacc.c:1646  */
+    { (yyval.treenode) = build0 (CALL_EXPR, get_var((yyvsp[-3].name))); }
+#line 1729 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 319 "neis.y" /* yacc.c:1646  */
+#line 327 "neis.y" /* yacc.c:1646  */
     { build_function_decl((yyvsp[-4].name)); }
-#line 1727 "neis.tab.c" /* yacc.c:1646  */
+#line 1735 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 333 "neis.y" /* yacc.c:1646  */
+#line 341 "neis.y" /* yacc.c:1646  */
     {(yyval.treenode) = (yyvsp[-1].treenode);}
-#line 1733 "neis.tab.c" /* yacc.c:1646  */
+#line 1741 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 337 "neis.y" /* yacc.c:1646  */
+#line 345 "neis.y" /* yacc.c:1646  */
     {}
-#line 1739 "neis.tab.c" /* yacc.c:1646  */
+#line 1747 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 346 "neis.y" /* yacc.c:1646  */
+#line 354 "neis.y" /* yacc.c:1646  */
     {}
-#line 1745 "neis.tab.c" /* yacc.c:1646  */
+#line 1753 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 358 "neis.y" /* yacc.c:1646  */
+#line 366 "neis.y" /* yacc.c:1646  */
     { //struct nesting *loop;
                                   //loop = expand_start_loop (0);
                                   //expand_exit_loop_if_false (loop, $3);
                                 }
-#line 1754 "neis.tab.c" /* yacc.c:1646  */
+#line 1762 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 361 "neis.y" /* yacc.c:1646  */
+#line 369 "neis.y" /* yacc.c:1646  */
     {/* expand_end_loop();*/ }
-#line 1760 "neis.tab.c" /* yacc.c:1646  */
+#line 1768 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 362 "neis.y" /* yacc.c:1646  */
+#line 370 "neis.y" /* yacc.c:1646  */
     { // struct nesting *loop;
                                   //loop = expand_start_loop (0);
                                   //expand_exit_loop_if_false (loop, $3);
                                 }
-#line 1769 "neis.tab.c" /* yacc.c:1646  */
+#line 1777 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 365 "neis.y" /* yacc.c:1646  */
+#line 373 "neis.y" /* yacc.c:1646  */
     { /*expand_end_loop();*/ }
-#line 1775 "neis.tab.c" /* yacc.c:1646  */
+#line 1783 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 369 "neis.y" /* yacc.c:1646  */
+#line 377 "neis.y" /* yacc.c:1646  */
     {// struct nesting *loop;
                                              // loop = expand_start_loop (0);
                                              // expand_exit_loop_if_false (loop, $7);
                                             }
-#line 1784 "neis.tab.c" /* yacc.c:1646  */
+#line 1792 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 372 "neis.y" /* yacc.c:1646  */
+#line 380 "neis.y" /* yacc.c:1646  */
     { /*expand_end_loop();*/ }
-#line 1790 "neis.tab.c" /* yacc.c:1646  */
+#line 1798 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 373 "neis.y" /* yacc.c:1646  */
+#line 381 "neis.y" /* yacc.c:1646  */
     { //struct nesting *loop;
                                              // loop = expand_start_loop (0);
                                             //  expand_exit_loop_if_false (loop, $7);
                                             }
-#line 1799 "neis.tab.c" /* yacc.c:1646  */
+#line 1807 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 376 "neis.y" /* yacc.c:1646  */
+#line 384 "neis.y" /* yacc.c:1646  */
     { /*expand_end_loop();*/ }
-#line 1805 "neis.tab.c" /* yacc.c:1646  */
+#line 1813 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 381 "neis.y" /* yacc.c:1646  */
+#line 389 "neis.y" /* yacc.c:1646  */
     {/* expand_start_cond ($3, 0); */}
-#line 1811 "neis.tab.c" /* yacc.c:1646  */
+#line 1819 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 382 "neis.y" /* yacc.c:1646  */
+#line 390 "neis.y" /* yacc.c:1646  */
     {/* expand_end_cond ();*/ }
-#line 1817 "neis.tab.c" /* yacc.c:1646  */
+#line 1825 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 385 "neis.y" /* yacc.c:1646  */
+#line 393 "neis.y" /* yacc.c:1646  */
     {/*  expand_start_cond ($3, 0); */}
-#line 1823 "neis.tab.c" /* yacc.c:1646  */
+#line 1831 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 387 "neis.y" /* yacc.c:1646  */
+#line 395 "neis.y" /* yacc.c:1646  */
     {/*  expand_start_else ();*/ }
-#line 1829 "neis.tab.c" /* yacc.c:1646  */
+#line 1837 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 389 "neis.y" /* yacc.c:1646  */
+#line 397 "neis.y" /* yacc.c:1646  */
     {/*  expand_end_cond (); */}
-#line 1835 "neis.tab.c" /* yacc.c:1646  */
+#line 1843 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 392 "neis.y" /* yacc.c:1646  */
+#line 400 "neis.y" /* yacc.c:1646  */
     { (yyval.treenode) = ret_stmt ((yyvsp[-1].treenode));}
-#line 1841 "neis.tab.c" /* yacc.c:1646  */
+#line 1849 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 396 "neis.y" /* yacc.c:1646  */
+#line 404 "neis.y" /* yacc.c:1646  */
     {(yyval.treenode) = build2 (LE_EXPR, integer_type_node, (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
-#line 1847 "neis.tab.c" /* yacc.c:1646  */
+#line 1855 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 397 "neis.y" /* yacc.c:1646  */
+#line 405 "neis.y" /* yacc.c:1646  */
     {(yyval.treenode) = build2 (GE_EXPR, integer_type_node, (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
-#line 1853 "neis.tab.c" /* yacc.c:1646  */
+#line 1861 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 398 "neis.y" /* yacc.c:1646  */
+#line 406 "neis.y" /* yacc.c:1646  */
     {(yyval.treenode) = build2 (NE_EXPR, integer_type_node, (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
-#line 1859 "neis.tab.c" /* yacc.c:1646  */
+#line 1867 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 399 "neis.y" /* yacc.c:1646  */
+#line 407 "neis.y" /* yacc.c:1646  */
     {(yyval.treenode) = build2 (EQ_EXPR, integer_type_node, (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
-#line 1865 "neis.tab.c" /* yacc.c:1646  */
+#line 1873 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 400 "neis.y" /* yacc.c:1646  */
+#line 408 "neis.y" /* yacc.c:1646  */
     {(yyval.treenode) = build2 (GT_EXPR, integer_type_node, (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
-#line 1871 "neis.tab.c" /* yacc.c:1646  */
+#line 1879 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 401 "neis.y" /* yacc.c:1646  */
+#line 409 "neis.y" /* yacc.c:1646  */
     {(yyval.treenode) = build2 (LT_EXPR, integer_type_node, (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
-#line 1877 "neis.tab.c" /* yacc.c:1646  */
+#line 1885 "neis.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1881 "neis.tab.c" /* yacc.c:1646  */
+#line 1889 "neis.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2105,7 +2113,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 405 "neis.y" /* yacc.c:1906  */
+#line 413 "neis.y" /* yacc.c:1906  */
 
 
 #include "lex.yy.c"
