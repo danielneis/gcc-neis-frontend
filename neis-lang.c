@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with GCC; see the file COPYING3.  If not see
 <http://www.gnu.org/licenses/>.  */
 
+#include "neis.tab.c"
 #include "config.h"
 #include "system.h"
 #include "coretypes.h"
@@ -33,6 +34,7 @@ along with GCC; see the file COPYING3.  If not see
 #include "expr.h"
 #include "stmt.h"
 #include "name-lookup.h"
+#include "opts.h"
 
 /* Tables of information about tree codes.  */
 
@@ -313,7 +315,7 @@ void neis_parse_file(void)
     yyin = fopen(in_fnames[0], "r");
 
     if (yyin == NULL)
-        fatal_error("cannot open %s: %m", filename);
+        fatal_error("cannot open input file");
 
     if(!yyparse())
         printf("\nParsing complete\n");

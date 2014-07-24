@@ -224,7 +224,7 @@ void add_var(char *name)
     //pushdecl (var_decls[i]);
 
     /* Emit the rtl for the variable declaration*/
-    rest_of_compilation (var_decls[i]);
+    rest_of_decl_compilation (var_decls[i], 1, 0);
 
     /* Emit the rtl for the initialization. ie. Initialized to zero*/
     //expand_decl_init (var_decls[i]);
@@ -1756,13 +1756,13 @@ yyreduce:
 
   case 54:
 #line 363 "neis.y" /* yacc.c:1646  */
-    { (yyval.treenode) = build4 (FOR_STMT, integer_type_ndoe, (yyvsp[-6].treenode), (yyvsp[-4].treenode), (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
+    { (yyval.treenode) = build4 (FOR_STMT, integer_type_node, (yyvsp[-6].treenode), (yyvsp[-4].treenode), (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
 #line 1761 "neis.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
 #line 364 "neis.y" /* yacc.c:1646  */
-    { (yyval.treenode) = build4 (FOR_STMT, integer_type_ndoe, (yyvsp[-6].treenode), (yyvsp[-4].treenode), (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
+    { (yyval.treenode) = build4 (FOR_STMT, integer_type_node, (yyvsp[-6].treenode), (yyvsp[-4].treenode), (yyvsp[-2].treenode), (yyvsp[0].treenode)); }
 #line 1767 "neis.tab.c" /* yacc.c:1646  */
     break;
 

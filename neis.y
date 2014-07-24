@@ -159,7 +159,7 @@ void add_var(char *name)
     //pushdecl (var_decls[i]);
 
     /* Emit the rtl for the variable declaration*/
-    rest_of_compilation (var_decls[i]);
+    rest_of_decl_compilation (var_decls[i], 1, 0);
 
     /* Emit the rtl for the initialization. ie. Initialized to zero*/
     //expand_decl_init (var_decls[i]);
@@ -360,8 +360,8 @@ WhileStmt:   WHILE '(' Expr ')' Stmt { $$ = build2 (WHILE_STMT, integer_type_nod
         ;
 
 /* For Block */
-ForStmt: FOR '(' Expr ';' Expr ';' Expr ')' Stmt { $$ = build4 (FOR_STMT, integer_type_ndoe, $3, $5, $7, $9); }
-       | FOR '(' Expr ';' Expr ';' Expr ')' CompoundStmt { $$ = build4 (FOR_STMT, integer_type_ndoe, $3, $5, $7, $9); }
+ForStmt: FOR '(' Expr ';' Expr ';' Expr ')' Stmt { $$ = build4 (FOR_STMT, integer_type_node, $3, $5, $7, $9); }
+       | FOR '(' Expr ';' Expr ';' Expr ')' CompoundStmt { $$ = build4 (FOR_STMT, integer_type_node, $3, $5, $7, $9); }
     ;
 
 /* IfStmt Block */
