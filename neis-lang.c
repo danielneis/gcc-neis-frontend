@@ -310,7 +310,17 @@ neis_global_bindings_p (void)
 
 void neis_parse_file(void)
 {
-    printf("I am parsing you file ;)");
+    yyin = fopen(in_fnames[0], "r");
+
+    if (yyin == NULL)
+        fatal_error("cannot open %s: %m", filename);
+
+    if(!yyparse())
+        printf("\nParsing complete\n");
+    else
+        printf("\nParsing failed\n");
+
+    fclose(yyin);
 }
 
 #undef LANG_HOOKS_NAME
