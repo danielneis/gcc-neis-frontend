@@ -5,6 +5,7 @@
 %}
 
 %pointer
+%option noyywrap
 
 %%
 [ \n\t]           ;                   // white space

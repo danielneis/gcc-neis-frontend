@@ -302,6 +302,24 @@ neis_type_for_size (unsigned precision, int unsignedp)
   return NULL_TREE;
 }
 
+static tree
+neis_pushdecl (tree t ATTRIBUTE_UNUSED)
+{
+    gcc_unreachable ();
+}
+
+static tree
+neis_getdecls (void)
+{
+    gcc_unreachable ();
+}
+
+static bool
+neis_global_bindings_p (void)
+{
+    gcc_unreachable ();
+}
+
 #undef LANG_HOOKS_NAME
 #define LANG_HOOKS_NAME "Neis"
 
@@ -309,6 +327,15 @@ neis_type_for_size (unsigned precision, int unsignedp)
 #define LANG_HOOKS_TYPE_FOR_MODE neis_type_for_mode
 #undef LANG_HOOKS_TYPE_FOR_SIZE
 #define LANG_HOOKS_TYPE_FOR_SIZE neis_type_for_size
+
+#undef LANG_HOOKS_PUSHDECL
+#define LANG_HOOKS_PUSHDECL neis_pushdecl
+
+#undef LANG_HOOKS_GETDECLS
+#define LANG_HOOKS_GETDECLS neis_getdecls
+
+#undef LANG_HOOKS_GLOBAL_BINDINGS_P
+#define LANG_HOOKS_GLOBAL_BINDINGS_P neis_global_bindings_p
 
 #undef LANG_HOOKS_INIT_TS
 #define LANG_HOOKS_INIT_TS neis_init_ts

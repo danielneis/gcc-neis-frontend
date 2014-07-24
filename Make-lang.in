@@ -22,7 +22,7 @@
 # The name of the NEIS compiler.
 NEIS_EXE = neis1$(exeext)
 # The NEIS-specific object files inclued in $(NEIS_EXE).
-NEIS_OBJS = neis/neis.tab.o neis/neis-lang.o
+NEIS_OBJS = neis/neis-lang.o attribs.o
 
 # Rules
 
@@ -68,7 +68,7 @@ neis-warn = $(STRICT_WARN)
 
 $(NEIS_EXE): $(NEIS_OBJS) $(BACKEND) $(LIBDEPS)
 	+$(LLINKER) $(ALL_LINKERFLAGS) $(LDFLAGS) -o $@ \
-	-Wno-write-strings $(NEIS_OBJS) -lfl $(BACKEND) $(BACKENDLIBS) $(LIBS)
+	$(NEIS_OBJS) $(BACKEND) $(BACKENDLIBS) $(LIBS)
 
 # NEIS testing is done as part of C/C++/Fortran etc. testing.
 check-neis:

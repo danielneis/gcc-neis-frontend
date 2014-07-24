@@ -18,7 +18,7 @@
 #include "stringpool.h"
 
 int yylex(void);
-void yyerror(char *s);
+void yyerror(const char *s);
 
 tree fndecl; // Consider it as a global value.
 
@@ -68,7 +68,7 @@ void build_function_decl (char *name)
 
     /*This gives idea regarding where the declaration is in the source code */
     //DECL_SOURCE_FILE( fndecl) = input_filename;
-    DECL_SOURCE_LINE( fndecl) = 1;
+    //DECL_SOURCE_LINE( fndecl) = 1;
 
     /* This function is just used to print the name of the function "name", on stderr if required */
     announce_function( fndecl);
@@ -133,7 +133,7 @@ tree var_decls[100];    //global array
 
 void add_var(char *name)
 {
-    tree fndecl; // Consider it as a global value.
+    //tree fndecl; // Consider it as a global value.
     int i;
     /*Add the name given, as the last name in the array */
     for(i=0;var_name[i];i++);
@@ -156,7 +156,7 @@ void add_var(char *name)
     DECL_INITIAL (var_decls[i]) = integer_zero_node;
 
     /*push to the current scope. Explained before*/
-    pushdecl (var_decls[i]);
+    //pushdecl (var_decls[i]);
 
     /* Emit the rtl for the variable declaration*/
     //expand_decl (var_decls[i]);
@@ -415,6 +415,6 @@ Expr:   Expr TLE Expr {$$ = build2 (LE_EXPR, integer_type_node, $1, $3); }
 int yylex(void);
 int yyparse(void);
 
-void yyerror(char *s) {
+void yyerror(const char *s) {
     printf("Linha %d : %s (%s) \n", yylineno, s, yytext );
 }
