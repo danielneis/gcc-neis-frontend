@@ -79,14 +79,8 @@ void build_function_decl (char *name)
     /* It holds the tree of bindings. Just a method used here to make a partial tree. Don't bother about that. */
     DECL_INITIAL( fndecl) = error_mark_node;
 
-    /* All tree and rtl are allocated in temporary memory. Used per function. */
-    //temporary_allocation();
-
     /*pushlevel is explained in call back. Here, it requires a push at the start of any function. */
     //pushlevel(0);
-
-    /*create function rtl for function definition. */
-   // make_function_rtl( fndecl);
 
     /*Generate rtl for the start of a function, fndecl. The second and third parameters denote the file and the line */
    // init_function_start(fndecl, input_filename, 1);
@@ -94,22 +88,14 @@ void build_function_decl (char *name)
     /*Let's start the rtl for a new function. It also sets the variables used for emitting rtl. The second parameter shows that there is no cleanup associated with. If it is made nonzero, cleanup will be run when a return statement is met. */
     //expand_function_start(fndecl, 0);
 
-    /*It generates the rtl code for entering a new binding level.*/
-    //expand_start_bindings(0);
-
-} //end of build_function_decl
-
+}
 
 void build_function()
 {
-
     //tree fndecl; // Consider it as a global value.
 
     /*Let's build the tree and emit the rtl for the return statement. In order to avoid an extra tree variable, I have included the tree creation and rtl conversion in a single statement. First build a tree of type result for 'fndecl'. I am always returning zero from our simple function. If you intend to return any other value, replace integer_zero_node with the other corresponding tree structure. expand_return creates the rtl for the tree. */
     //expand_return (build (MODIFY_EXPR, void_type_node, DECL_RESULT(fndecl), integer_zero_node));
-
-    /*Emit rtl for the end of bindings. Just like start bindings */
-    //expand_end_bindings (NULL_TREE, 1, 0);
 
     /* We have pushed. So don't forget to pop */
     //poplevel (1, 0, 1);
@@ -122,9 +108,6 @@ void build_function()
 
     /*We are free now */
     current_function_decl=0;
-
-    /* Free everything in temporary store. Argument 1 shows that, we have just finished compiling a function */
-    //permanent_allocation (1);
 }
 
 
